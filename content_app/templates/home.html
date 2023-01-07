@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+{% block title %}
+   Blog
+{% endblock title %}
+{% block content %}
+<h1 style="text-align: center;"> Blog App</h1>
+
+<hr style="border: solid;">
+{% for i in data %}
+<div style="text-align: center; border-style: double;">
+    <h2>{{i.title}}</h2>
+    <h3>{{i.content}}</h3>
+    <h6>{{i.author.username}} - {{i.date_posted}}</h6>
+    <hr>
+    <a href="{% url 'edit' id=i.id  %}">
+        <button type="button" class="btn btn-success">Edit</button> 
+        </a>
+    <a href="{% url 'delete' id=i.id %}">
+        <button type="button" class="btn btn-danger">Delete</button>
+        </a>
+    <hr>
+</div>
+{% endfor %}
+<br>
+<center>
+    <a href="{% url 'add' %}">
+        <button class="btn btn-primary"> Add</button>
+    </a>
+    
+    <a href="{% url 'deleteall' %}">
+        <button class="btn btn-danger"> Delete All</button>
+    </a>
+    
+
+</center>
+
+{% endblock content %}
