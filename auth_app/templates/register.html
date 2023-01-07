@@ -31,10 +31,17 @@
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        {% if user.is_authenticated %}
         <br>
         <a href="{% url 'home' %}">
           <button type="Cancel" class="btn btn-primary">Cancel</button>
         </a>
+        {% else %}
+        <br>
+        <a href="{% url 'signin' %}">
+          <button type="Cancel" class="btn btn-primary">Cancel</button>
+        </a>
+        {% endif %}
 </div>
 
 

@@ -12,23 +12,36 @@ def add(request):
     else:
         t=request.POST['title']
         d=request.POST['description'] 
-        Blog.objects.create(title=t, content=d, author_id=1)  
+        Blog.objects.create(title=t, content=d, author_id=request.user.id)  
         return redirect('home')  
 
 def delete(request,id):
-    Blog.objects.get(id=id).delete()
-    return redirect('home')
+    try:
+        Blog.objects.get(id=id).delete()
+        return redirect('home')
+    except:
+        return redirect('home')    
 
 def edit(request, id):
-    dataset=Blog.objects.get (id=id)
-    if request.method=='GET':
-        return render(request, 'edit.html' , {'dataset':dataset})
-    else:
-        t=request.POST['title']
-        d=request.POST['description']
-        dataset.title=t
-        dataset.content=d
-        return redirect('home')
+
+    try:
+        dataset=Blog.objects.get (id=id)
+        if request.method=='GET':
+            return render(request, 'edit.html' , {'dataset':dataset})
+        else:
+            t=request.POST['title']
+            d=request.POST['description']
+            dataset.title=t
+            dataset.content=d
+            dataset.save()
+            return redirect('home')
+           
+    except:
+        return redirect('edit')
+
+
+
+   
 
 def deleteall(request):
     Blog.objects.all().delete()

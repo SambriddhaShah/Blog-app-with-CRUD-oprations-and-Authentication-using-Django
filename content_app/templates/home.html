@@ -6,6 +6,8 @@
 <h1 style="text-align: center;"> Blog App</h1>
 
 <hr style="border: solid;">
+
+{% if user.is_authenticated %}
 {% for i in data %}
 <div style="text-align: center; border-style: double;">
     <h2>{{i.title}}</h2>
@@ -27,11 +29,45 @@
         <button class="btn btn-primary"> Add</button>
     </a>
     
+    {% if data %}
     <a href="{% url 'deleteall' %}">
         <button class="btn btn-danger"> Delete All</button>
     </a>
+    {% endif %}
     
 
 </center>
+
+{% else %}
+{% for i in data %}
+<div style="text-align: center; border-style: double;">
+    <h2>{{i.title}}</h2>
+    <h3>{{i.content}}</h3>
+    <h6>{{i.author.username}} - {{i.date_posted}}</h6>
+    <hr>
+    <a href="{% url 'signin' %}">
+        <button type="button" class="btn btn-success">Edit</button> 
+        </a>
+    <a href="{% url 'signin' %}">
+        <button type="button" class="btn btn-danger">Delete</button>
+        </a>
+    <hr>
+</div>
+{% endfor %}
+<br>
+<center>
+    <a href="{% url 'signin' %}">
+        <button class="btn btn-primary"> Add</button>
+    </a>
+    {% if data %}
+    <a href="{% url 'signin' %}">
+        <button class="btn btn-danger"> Delete All</button>
+    </a>
+    {% endif %}
+    
+
+</center>
+
+{% endif %}
 
 {% endblock content %}
